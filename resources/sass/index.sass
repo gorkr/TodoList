@@ -1,0 +1,36 @@
+/**
+ * 这个注入了Tailwind 的基本样式, 它混合了Normalize.css和一些额外的基本样式
+ *
+ * 你可以在以下链接中看到这些样式:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ */
+@tailwind basex
+@tailwind components
+
+/**
+ * 在这里你可以添加任何自定义的组件类; 任何你想要在实用类加载之前加载的东  西都可以定义在这里，以便他们仍然可以被实用类覆盖
+ *
+ * 例如:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * 或者是否使用前置处理器:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+
+/**
+ * 这个注入了Tailwind所有的实用类，它的产生依赖于你的配置文件
+ */
+@tailwind utilities
+
+/**
+ * 这里你可以添加任何自定义的实用类，他们不随着Tailwind开箱即用
+ *
+ * 例如 :
+ *
+ * .bg-pattern-graph-paper { ... }
+ * .skew-45 { ... }
+ *

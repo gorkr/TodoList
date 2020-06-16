@@ -5,15 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}"> {{--  csrf攻击， 以便使用vue.js--}}
 
-        <title>Laravel</title>
+        <title>TodoList</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="{{ asset('css/index.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+                background-color: #2d3748;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
@@ -65,12 +66,14 @@
         </style>
     </head>
     <body>
-    <div id="app">
-        <example-component>dasdas</example-component>
+    <div id="app"  class="h-screen flex items-center justify-center bg-teal-lightest font-sans">
+        <todo-component></todo-component>
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}">
+
+    </script>
 
     </body>
 </html>
