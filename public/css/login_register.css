@@ -1,0 +1,15 @@
+.bg {
+    background:url('../images/bg1.jpg') no-repeat center fixed;
+
+    background-size:100%;
+}
+
+.opac {
+
+    opacity:0.8;
+
+    filter:alpha(opacity=80);
+
+    zoom:1;
+
+}
