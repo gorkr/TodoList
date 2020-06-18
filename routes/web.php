@@ -17,6 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/login', 'MyController@login')->name('login');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::any('/register', 'MyController@register')->name('register');
+Route::any('/loginCheck', 'MyController@loginCheck')->name('loginCheck');
+Route::any('/add', 'MyController@add')->name('add');
+Route::any('/loginSuccess', 'MyController@loginSuccess')->name('loginSuccess');
+Route::any('/insert', 'MyController@insert')->name('insert');
+Route::any('/insert_homepage', 'MyController@insert_homepage')->name('insert_homepage');
+Route::any('/out', 'MyController@out')->name('out');
+Route::any('/update_homepage', 'MyController@update_homepage')->name('update_homepage');
+Route::any('/delete_homepage', 'MyController@delete_homepage')->name('delete_homepage');
+Route::any('/accept', 'MyController@accept')->name('accept');
