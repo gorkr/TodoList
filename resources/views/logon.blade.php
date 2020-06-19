@@ -13,7 +13,7 @@
         <div  class=" modal-dialog opac  " style="margin-top: 10%; width: 500px">
             <form action="add" method="post">
                 @csrf
-                <div class="modal-content">
+                <div class="modal-content bg-content">
 
                     <div class="modal-header">
 {{--                        <img src="../images/logo.png" class="img-responsive m-auto" width="100xp">--}}
@@ -21,14 +21,14 @@
                     </div>
                     <div class="modal-body" id = "model-body">
                         <div class="form-group">
-                            <input type="text" name="name" placeholder="Name" required="" class="form-control" autofocus="autofocus">
+                            <input type="text" name="name" placeholder="Name" required="" class="form-control bg-content" autofocus="autofocus">
                         </div>
                         <div class="form-group">
-                            <input type="password" name="password" placeholder="Password" required="" id="pwd" class="form-control">
+                            <input type="password" name="password" placeholder="Password" required="" id="pwd" class="form-control bg-content">
 
                         </div>
                         <div class="form-group">
-                            <input type="password" name="password" placeholder="Confirm Password" required="" id="pwd1" class="form-control"
+                            <input type="password" name="password" placeholder="Confirm Password" required="" id="pwd1" class="form-control bg-content"
                                    onkeyup="validate()">
                         </div>
 
@@ -38,7 +38,7 @@
 
                     <div class="form-group">
 
-                        <input type="email" name="email" placeholder="Email" required="" class="form-control">
+                        <input type="email" name="email" placeholder="Email" required="" class="form-control bg-content">
                     </div>
 
                     </div>

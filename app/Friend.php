@@ -11,3 +11,4 @@ class Friend extends Model
     public $timestamps = false;
     protected $fillable = ['id','name','friend'];
 }
+

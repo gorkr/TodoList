@@ -13,11 +13,11 @@
     <title>login</title>
 </head>
 <body class="bg">
-<div class="container">
+<div class="container ">
     <div class=" modal-dialog opac  " style="margin-top: 10%;" >
         <form action="loginCheck"  >
             @csrf
-            <div class="modal-content">
+            <div class="modal-content bg-content">
 
                 <div class="modal-header">
 
@@ -25,18 +25,17 @@
 
                 </div>
 
-                <div class="modal-body" id = "model-body">
+                <div class="modal-body" id = "modal-body">
                     <div class="m-2" >
                         <h4 class="modal-title text-center "> Welcome to TodoList! </h4>
                     </div>
 
                     <div class="form-group">
-
-                        <input type="text" name="name" placeholder="Username or Email" required="" class="form-control" autofocus="autofocus" id="inputText">
+                        <input class="form-control bg-content" type="text" name="name" placeholder="Username or Email" required=""  autofocus="autofocus" id="inputText">
                     </div>
 
                     <div class="form-group">
-                        <input  class="form-control" type="password" name="password" placeholder="Password" required="" id="inputPassword">
+                        <input  class="form-control bg-content " type="password" name="password" placeholder="Password" required="" id="inputPassword">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -44,7 +43,7 @@
                         <button type="submit" class="btn btn-primary control" method="post">login</button>
                     </div>
                     <div class="form-group">
-                        <button  type="button" onclick="logon();" class="btn  form-control">logon</button>
+                        <button  type="button" onclick="logon();" class="btn  form-control bg-content">logon</button>
                     </div>
                     <div id="response" value="true"></div>
 
@@ -58,12 +57,10 @@
 
 
 
-
 <script>
     function logon() {
         location.href = "{{'logon'}}";
-    };
-
+    }
 </script>
 </body>
 </html>

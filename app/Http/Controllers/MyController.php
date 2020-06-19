@@ -18,6 +18,7 @@ class MyController extends Controller
 {
     //
     public function login(){
+        session_start();
         return view('login');
     }
 
@@ -27,7 +28,6 @@ class MyController extends Controller
 
     // 验证账户密码 并 跳转到 homepage
     public function loginCheck(Request $request){
-
         $name = $request->get('name');
         $password = $request->get('password');
 
@@ -43,13 +43,13 @@ class MyController extends Controller
         }
         if ($flag){
             Session::put('name',$name);
+            $_SESSION['userName'] = $name;
             return redirect("/homepage");
         }else{
             return redirect("/login");
 
         }
     }
-
 
     public function add(Request $request){
         $var = User::create([
@@ -67,20 +67,33 @@ class MyController extends Controller
 
     // 个人主页
     public function homepage(Request $request){
+
+
+    if (!isset($_SESSION['name'])) {
+        header("Location:login.php");}
+
         $name = Session::get('name');
         $data = DB::table('homepage')->where('name',$name)->orWhere('share','like','%'.$name.'%')->paginate(100);
+//        $users = DB::table()
         return view('homepage',compact('data'));
     }
 
     public function insert(){
-        return view('insert');
+        $name = Session::get('name');
+
+        $friends = DB::table('friend')->where('name', $name)->paginate(100);
+
+
+
+       return view('insert', compact('friends'));
     }
 
     public function insert_homepage(Request $request){
         $name = Session::get('name');
         $work = $request->get('work');
-        $status = $request->get('status');
-        $share = $request->get('share');
+//        $status = $request->get('status');
+        $status = '进行中';
+        $share = $request->get('Share');
         $result = homepage::create(['name'=>$name,'work' => $work, 'status' => $status, 'share' => $share.' ']);
         if ($result){
             //添加成功

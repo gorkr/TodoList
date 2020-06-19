@@ -1,3 +1,4 @@
+
 <DOCTYPE html>
     <html>
     <head>
@@ -5,16 +6,19 @@
         <title>Home</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link href="{{ asset('css/global.css') }}" rel="stylesheet">
+
+
     </head>
     <body class="bg">
+
     <div class="container " style="margin-top: 5%;">
         <div class=" modal-dialog opac w-75 ">
-            <div class="modal-content">
+            <div class="modal-content bg-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Thing List</h4>
                 </div>
                 <div class="modal-body">
-                    <table  class="table table-hover table-striped ">
+                    <table  class="table table-hover table-striped bg-content ">
                         <thead>
                         <tr>
                             <th>list</th>
@@ -53,7 +57,7 @@
                 </div>
                 <div class="modal-footer">
                     <button onclick="insert();"  class="btn btn-primary ">Add</button>
-                    <button onclick="out();" class="btn btn-default " >Logout</button>
+                    <button onclick="out();" class="btn btn-default bg-content " >Logout</button>
                 </div>
             </div>
         </div>
@@ -63,6 +67,7 @@
 
 
     </body>
+
     <script>
         function out() {
             location.href = "{{'out'}}";
@@ -76,5 +81,6 @@
 
         }
     </script>
+
     </html>
 </DOCTYPE>
