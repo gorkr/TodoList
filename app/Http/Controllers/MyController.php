@@ -24,14 +24,17 @@ class MyController extends Controller
     }
 
     public function loginCheck(Request $request){
+
         $name = $request->get('name');
         $password = $request->get('password');
-//        $email = $request->get('email');
+
 
         $users = User::all();
+
         $flag = false;
         foreach ($users as $user){
-            if ($user->name == $name && $user->password == $password){
+            if ($user->password == $password
+            && ($user->email == $name || $user->user == $user)){
                 $flag = true;
             }
         }
@@ -39,8 +42,19 @@ class MyController extends Controller
             Session::put('name',$name);
             return redirect("/loginSuccess");
         }else{
-            print ("登录失败,请");
-            print ("<a href='login'>重新登录</a>！");
+            return redirect("/login");
+
+
+
+
+
+
+
+//            print ("登录失败,请");
+//            print ("<a href='login'>重新登录</a>！");
+
+
+
         }
     }
 
