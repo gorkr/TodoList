@@ -8,7 +8,6 @@ use App\User;
 use App\Friend;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -16,7 +15,7 @@ use Illuminate\Support\Facades\Session;
 
 class MyController extends Controller
 {
-    //
+
     public function login(){
         session_start();
         return view('login');
@@ -30,69 +29,72 @@ class MyController extends Controller
     public function loginCheck(Request $request){
         $name = $request->get('name');
         $password = $request->get('password');
-
-
         $users = User::all();
-
         $flag = false;
+
         foreach ($users as $user){
             if ($user->password == $password
             && ($user->email == $name || $user->name == $name)){
                 $flag = true;
             }
         }
-        if ($flag){
+        if ($flag){ // 密码正确
             Session::put('name',$name);
             $_SESSION['userName'] = $name;
             return redirect("/homepage");
-        }else{
+        }else{  // 密码错误
+            dump("password incorrect");
             return redirect("/login");
 
         }
     }
 
+    // 注册用户
     public function add(Request $request){
-        $var = User::create([
-            'name' => $request->get('name'),
-            'password' => $request->get('password'),
-            'email' => $request->get('email')
-        ]);
-        if ($var){
+
+        $name = $request->get('name');
+        $password =  $request->get('password');
+        $email = $request->get('email');
+        // 验证用户是否已存在
+        $flag = DB::table('user')->where('name', $name);
+
+        if(!$flag){  // 用户不存在
+            User::create([
+                'name' => $name,
+                'password' => $password,
+                'email' => $email
+            ]);
             return redirect('/login');
-        }else{
-            dump("aaa");
+        } else{  // 用户已存在
+            dump("user had been registered!");
+            return redirect('/logon');
         }
 
     }
 
     // 个人主页
+    // todo: 增加好友系统
     public function homepage(Request $request){
-
-
-    if (!isset($_SESSION['name'])) {
+    if (!isset($_SESSION['name'])) {  // 防止直接登录
         header("Location:login.php");}
-
         $name = Session::get('name');
         $data = DB::table('homepage')->where('name',$name)->orWhere('share','like','%'.$name.'%')->paginate(100);
-//        $users = DB::table()
         return view('homepage',compact('data'));
     }
 
+    // 添加List的页面
     public function insert(){
         $name = Session::get('name');
-
         $friends = DB::table('friend')->where('name', $name)->paginate(100);
-
-
-
        return view('insert', compact('friends'));
     }
 
+    // 创建一个List
     public function insert_homepage(Request $request){
         $name = Session::get('name');
         $work = $request->get('work');
 //        $status = $request->get('status');
-        $status = '进行中';
+        $status = 'Start';
         $share = $request->get('Share');
         $result = homepage::create(['name'=>$name,'work' => $work, 'status' => $status, 'share' => $share.' ']);
         if ($result){
@@ -104,16 +106,18 @@ class MyController extends Controller
             print ("<a href='insert'>重新添加</a>！");
         }
     }
+
+    // 登出
     public function out(){
-        //return view('login'); 路径不变
         return redirect('login');
     }
 
-    public function update_homepage(Request $request){
+    // 修改list页面
+    public function edit(Request $request){
         $id = $request->get('id');
         Session::put('id',$id);
         $data = homepage::find($id);
-        return view('update_homepage',compact('data'));
+        return view('edit',compact('data'));
     }
 
     public function update_homepage_op(Request $request){
@@ -148,10 +152,10 @@ class MyController extends Controller
 
         }elseif (strpos($share,$name.'未接受 ') !== false){
             $str = str_replace($name.'未接受 ', $name.'已接受 ', $share);
-            homepage::where('id',$id) -> update(['status'=>'进行中','share'=>$str]);
+            homepage::where('id',$id) -> update(['status'=>'Start','share'=>$str]);
         }else{
             $str = str_replace($name, $name.'已接受 ', $share);
-            homepage::where('id',$id) -> update(['status'=>'进行中','share'=>$str]);
+            homepage::where('id',$id) -> update(['status'=>'Start','share'=>$str]);
         }
         return redirect("/homepage");
     }
@@ -184,12 +188,12 @@ class MyController extends Controller
     public function todolist(Request $request){
         $id = Session::get('id');
         $name = Session::get('name');
-        if (Session::has('进行中')){
-            $data = DB::table('todolist')->where('homeid',$id)->where('status','进行中')->paginate(100);
-            Session::forget('进行中');
-        }elseif (Session::has('已完成')){
-            $data = DB::table('todolist')->where('homeid',$id)->where('status','已完成')->paginate(100);
-            Session::forget('已完成');
+        if (Session::has('Start')){
+            $data = DB::table('todolist')->where('homeid',$id)->where('status','Start')->paginate(100);
+            Session::forget('Start');
+        }elseif (Session::has('End')){
+            $data = DB::table('todolist')->where('homeid',$id)->where('status','End')->paginate(100);
+            Session::forget('End');
         }else{
             $data = DB::table('todolist')->where('homeid',$id)->paginate(100);
         }
@@ -236,15 +240,15 @@ class MyController extends Controller
     }
 
     public function ing(){
-        Session::put('进行中','进行中');
+        Session::put('Start','Start');
         return redirect('todolist');
     }
     public function listend(){
-        Session::put('已完成','已完成');
+        Session::put('End','End');
         return redirect('todolist');
     }
     public function dellistend(){
-        Todolist::where('status','已完成')->delete();
+        Todolist::where('status','End')->delete();
         return redirect('todolist');
     }
 
@@ -270,8 +274,6 @@ class MyController extends Controller
     public function add_friend(Request $request){
         $name = Session::get('name');
         $friend = $request->get('friend');
-        $data = DB::table('user')->where('name',$friend);
-        $friend = $data->get('id');
         Friend::create(['name'=>$name,'friend'=>$friend]);
         return redirect('todolist');
     }
@@ -281,11 +283,5 @@ class MyController extends Controller
         Friend::where('id',$id)->delete();
         return redirect('todolist');
     }
-
-
-
-
-
-
 
 }

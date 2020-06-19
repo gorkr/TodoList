@@ -16,13 +16,13 @@
             <div>
                 <label for="status">Status：</label>
                 <select name="status" id="status" class="form-control">
-                    @if($data->status == '进行中')
-                        <option value="进行中" selected>进行中</option>
-                        <option value="已完成">已完成</option>
+                    @if($data->status == 'Start')
+                        <option value="Start" selected>Start</option>
+                        <option value="End">End</option>
                     @endif
-                    @if($data->status == '已完成')
-                        <option value="进行中">进行中</option>
-                        <option value="已完成" selected>已完成</option>
+                    @if($data->status == 'End')
+                        <option value="Start">Start</option>
+                        <option value="End" selected>End</option>
                     @endif
                 </select>
             </div>

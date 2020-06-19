@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <title>Home</title>
     </head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="{{ asset('css/global.css') }}" rel="stylesheet">
+
     <script>
         function del_friend(id) {
             //用户安全提示
@@ -44,14 +44,19 @@
             }
         }
     </script>
-    <body>
-    <div style="width: 650px; margin:auto; margin-top: 50px">
+    <body class="bg">
+
+
+
         <div style="float: left">
             <a href="add_list">添加</a>
             <a href="listall">全部</a>
-            <a href="ing">进行中</a>
-            <a href="listend">已完成</a>
-            <a href="dellistend">删除已完成</a>
+            <a href="ing">Start</a>
+            <a href="listend">End</a>
+            <a href="dellistend">删除End</a>
+
+
+
             <div style="float: left" class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     好友
@@ -64,38 +69,53 @@
                 </ul>
             </div>
         </div>
+
+
+
         <div style="float: right;margin: 5px">
             <a href="javascript:void(0);" id="delSelect">删除选中</a>
             <button type="submit" onclick="out();">返回</button>
         </div>
-        <form id="form" action="delete_list" method="post">
-            <table border="1" style="width: 600px">
-                <thead>
-                <tr>
-                    <th><input type="checkbox" id="firstCb"></th>
-                    <th>item</th>
-                    <th>status</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($data as $val)
-                    <tr>
-                        <th><input type="checkbox" name="uid" value="{{$val->id}}"></th>
-                        <td>{{$val->item}}</td>
-                        <td>{{$val->status}}</td>
-                        <td>
-                            <a href="update_list?id={{$val->id}}">修改</a>
-                            <a href="delete_list?uid={{$val->id}}">删除</a>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
 
-            </table>
-            <input type="hidden" name="_token" value="{{csrf_token()}}">
-        </form>
-    </div>
+
+
+        <div class="container bg-content">
+            <form id="form" action="delete_list" method="post">
+                <table border="1" style="width: 600px">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" id="firstCb"></th>
+                        <th>item</th>
+                        <th>status</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($data as $val)
+                        <tr>
+                            <th><input type="checkbox" name="uid" value="{{$val->id}}"></th>
+                            <td>{{$val->item}}</td>
+                            <td>{{$val->status}}</td>
+                            <td>
+                                <a href="update_list?id={{$val->id}}">修改</a>
+                                <a href="delete_list?uid={{$val->id}}">删除</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+
+                </table>
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+            </form>
+
+        </div>
+
+
+
+
+
+
+
 <div style="width: 650px; margin:auto; margin-top: 50px">
     <div style="float: left">
         <form action="todolist" method="post">

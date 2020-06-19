@@ -16,8 +16,8 @@
             <div>
                 <label for="status">Status：</label>
                 <select name="status" id="status" class="form-control">
-                    <option value="进行中">进行中</option>
-                    <option value="已完成">已完成</option>
+                    <option value="Start">Start</option>
+                    <option value="End">End</option>
                 </select>
             </div>
 

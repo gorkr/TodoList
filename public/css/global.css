@@ -15,10 +15,6 @@
     zoom:1;
 
 }
-body
-{
-    background-color:yellow;
-}
 
 
 @media (prefers-color-scheme: dark) {
@@ -38,11 +34,5 @@ body
     wt {
         color: #fff;
     }
-
-
-
-
-
-
 
 }
