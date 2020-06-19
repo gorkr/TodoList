@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\homepage;
 use App\TodoList;
 use App\User;
+use App\Friend;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -23,6 +25,7 @@ class MyController extends Controller
         return view('logon');
     }
 
+    // 验证账户密码 并 跳转到 homepage
     public function loginCheck(Request $request){
 
         $name = $request->get('name');
@@ -34,26 +37,15 @@ class MyController extends Controller
         $flag = false;
         foreach ($users as $user){
             if ($user->password == $password
-            && ($user->email == $name || $user->user == $user)){
+            && ($user->email == $name || $user->name == $name)){
                 $flag = true;
             }
         }
         if ($flag){
             Session::put('name',$name);
-            return redirect("/loginSuccess");
+            return redirect("/homepage");
         }else{
             return redirect("/login");
-
-
-
-
-
-
-
-//            print ("登录失败,请");
-//            print ("<a href='login'>重新登录</a>！");
-
-
 
         }
     }
@@ -73,7 +65,8 @@ class MyController extends Controller
 
     }
 
-    public function loginSuccess(Request $request){
+    // 个人主页
+    public function homepage(Request $request){
         $name = Session::get('name');
         $data = DB::table('homepage')->where('name',$name)->orWhere('share','like','%'.$name.'%')->paginate(100);
         return view('homepage',compact('data'));
@@ -91,7 +84,7 @@ class MyController extends Controller
         $result = homepage::create(['name'=>$name,'work' => $work, 'status' => $status, 'share' => $share.' ']);
         if ($result){
             //添加成功
-            return redirect("/loginSuccess");
+            return redirect("/homepage");
         }else{
             //添加失败
             print ("添加失败,请");
@@ -116,17 +109,17 @@ class MyController extends Controller
         $status = $request->get('status');
         $share = $request->get('share');
         homepage::where('id', $id) -> update(['work' => $work, 'status' => $status, 'share' => $share.' ']);
-        return redirect("/loginSuccess");
+        return redirect("/homepage");
     }
 
     public function delete_homepage(Request $request){
         $id = $request->get('id');
         $result = homepage::where('id', $id)->delete();
         if ($result){
-            return redirect("/loginSuccess");
+            return redirect("/homepage");
         }else{
             print ("删除失败,请");
-            print ("<a href='loginSuccess'>重新删除</a>！");
+            print ("<a href='homepage'>重新删除</a>！");
         }
     }
 
@@ -147,7 +140,7 @@ class MyController extends Controller
             $str = str_replace($name, $name.'已接受 ', $share);
             homepage::where('id',$id) -> update(['status'=>'进行中','share'=>$str]);
         }
-        return redirect("/loginSuccess");
+        return redirect("/homepage");
     }
     public function un_accept(Request $request){
         $name = Session::get('name');
@@ -166,7 +159,7 @@ class MyController extends Controller
             $str = str_replace($name, $name.'未接受 ', $share);
             homepage::where('id',$id) -> update(['status'=>'待接受','share'=>$str]);
         }
-        return redirect("/loginSuccess");
+        return redirect("/homepage");
     }
 
     public function todo(Request $request){
@@ -264,6 +257,8 @@ class MyController extends Controller
     public function add_friend(Request $request){
         $name = Session::get('name');
         $friend = $request->get('friend');
+        $data = DB::table('user')->where('name',$friend);
+        $friend = $data->get('id');
         Friend::create(['name'=>$name,'friend'=>$friend]);
         return redirect('todolist');
     }

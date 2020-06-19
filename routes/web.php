@@ -20,7 +20,7 @@ Route::get('/login', 'MyController@login')->name('login');
 Route::any('/logon', 'MyController@logon')->name('logon');
 Route::any('/loginCheck', 'MyController@loginCheck')->name('loginCheck');
 Route::any('/add', 'MyController@add')->name('add');
-Route::any('/loginSuccess', 'MyController@loginSuccess')->name('loginSuccess');
+Route::any('/homepage', 'MyController@homepage')->name('homepage');
 Route::any('/insert', 'MyController@insert')->name('insert');
 Route::any('/insert_homepage', 'MyController@insert_homepage')->name('insert_homepage');
 Route::any('/out', 'MyController@out')->name('out');

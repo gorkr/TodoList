@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <title>Test2</title>
     </head>
-    </head>
     <body>
     <div style="width: 600px">
         <center><h3>添加</h3></center>
